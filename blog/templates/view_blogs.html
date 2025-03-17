@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}All Blogs{% endblock %}
+
+{% block content %}
+<div class="blog-header text-center py-5 mb-4">
+    <h1 class="display-4">All Blog Posts</h1>
+    <p class="lead text-white-50">Discover interesting stories and insights</p>
+</div>
+
+<div class="row g-4">
+    {% for blog in blogs %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" class="card-img-top" alt="Blog Image" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title h5">{{ blog.title }}</h3>
+                    <p class="card-text text-muted">{{ blog.content|truncatewords:20 }}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 32px; height: 32px;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <small class="text-muted">{{ blog.author.username }}</small>
+                        </div>
+                        <a href="{% url 'blog_detail' blog.id %}" class="btn btn-outline-primary">
+                            <i class="fas fa-book-reader me-1"></i>Read More
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <small class="text-muted">
+                        <i class="far fa-clock me-1"></i>{{ blog.created_at|date:"F j, Y" }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>No blog posts available yet.
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% if blogs %}
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Blog navigation">
+        <ul class="pagination">
+            {% if blogs.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.previous_page_number }}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item active">
+                <span class="page-link">{{ blogs.number }}</span>
+            </li>
+            
+            {% if blogs.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ blogs.next_page_number }}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endblock %}

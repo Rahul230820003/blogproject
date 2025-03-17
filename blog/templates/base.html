@@ -1,0 +1,354 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+        :root {
+            --primary-color: #3182ce;
+            --primary-dark: #2c5282;
+            --secondary-color: #718096;
+            --accent-color: #f6ad55;
+            --background-color: #f8f9fa;
+            --text-color: #2d3748;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.08);
+            background-color: white !important;
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-color) !important;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            background-color: rgba(49, 130, 206, 0.1);
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-color);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            padding: 0.625rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Forms */
+        .form-control, .form-select {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Alerts */
+        .alert {
+            border: none;
+            border-radius: 0.5rem;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .alert-success {
+            background-color: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .alert-danger {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .alert-warning {
+            background-color: #feebc8;
+            color: #c05621;
+        }
+
+        .alert-info {
+            background-color: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 0.5em 1em;
+            font-weight: 500;
+            border-radius: 9999px;
+        }
+
+        /* Lists */
+        .list-group {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .list-group-item {
+            border-color: var(--border-color);
+            padding: 1rem 1.5rem;
+        }
+
+        /* Tables */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table th {
+            font-weight: 600;
+            background-color: #f7fafc;
+        }
+
+        .table td, .table th {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Pagination */
+        .pagination .page-link {
+            border: none;
+            padding: 0.75rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 0.375rem;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .pagination .page-link:hover {
+            background-color: rgba(49, 130, 206, 0.1);
+            color: var(--primary-color);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Custom Components */
+        .blog-header {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .blog-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Utilities */
+        .shadow-sm {
+            box-shadow: var(--card-shadow) !important;
+        }
+
+        .rounded-lg {
+            border-radius: 1rem !important;
+        }
+
+        .bg-light {
+            background-color: #f7fafc !important;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-pen-fancy me-2"></i>My Blog
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'create_blog' %}">
+                                <i class="fas fa-plus-circle me-1"></i>Create Blog
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">About My Blog</h5>
+                    <p class="text-muted">Share your thoughts and ideas with the world through our modern blogging platform.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5 class="mb-3">Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-muted me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-muted me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-muted me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center text-muted">
+                <small>&copy; {% now "Y" %} My Blog. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

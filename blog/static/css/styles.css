@@ -1,0 +1,43 @@
+/* Reset default margin & padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Responsive Layout */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: #333;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+/* Blog List */
+.blog-post {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f9f9f9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 10px;
+    }
+}
+

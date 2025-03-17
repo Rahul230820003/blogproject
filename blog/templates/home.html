@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h2>Recent Blogs</h2>
+    {% for blog in blogs %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">{{ blog.title }}</h4>
+                <p class="card-text">{{ blog.content|truncatechars:200 }}</p>
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="Blog Image" class="img-fluid" style="max-width: 300px;">
+                {% endif %}
+                <p class="text-muted">By: {{ blog.author.username }} | {{ blog.created_at }}</p>
+                <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
